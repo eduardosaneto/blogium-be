@@ -17,7 +17,7 @@ server.use(express.json());
 //   }];
 
 const posts = [];
-const comment = [];  
+const comments = [];  
 
 server.get('/posts', (req, res) => {
     res.send(posts);
@@ -38,6 +38,23 @@ server.post('/posts', (req, res) => {
 server.get('/posts/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const response = posts.find(post => post.id === id);
+    res.send(response);
+});
+
+server.post('/posts/:id/comments', (req, res) => {
+    const postId = parseInt(req.params.id);
+    const comment = {
+            id: comments.length,
+            postId: postId,
+            author: req.body.author,
+            content: req.body.content
+        }
+    comments.push(comment);
+});
+
+server.get('/posts/:id/comments', (req, res) => {
+    const postId = parseInt(req.params.id);
+    const response = comments.filter(comment => comment.postId === postId)
     res.send(response);
 });
 
