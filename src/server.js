@@ -21,7 +21,7 @@ server.post('/posts', (req, res) => {
         id: posts.length,
         title: postData.title,
         coverURL: postData.coverURL,
-        contentPreview: postData.content.replace('<p>', '').replace('</p>', ''),
+        contentPreview: postData.content.replace('<p>', '').replace('</p>', '').slice(0, 50),
         content: postData.content,
         commentCount: count
     }
