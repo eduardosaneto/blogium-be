@@ -24,12 +24,13 @@ server.get('/posts', (req, res) => {
 });
 
 server.post('/posts', (req, res) => {
+    const postData = req.body;
     const post = {
         id: posts.length,
-        title: req.body.title,
-        coverURL: req.body.coverURL,
-        contentPreview: req.body.content.slice(0, 100),
-        content: req.body.content,
+        title: postData.title,
+        coverURL: postData.coverURL,
+        contentPreview: postData.content.slice(0, 100),
+        content: postData.content,
     }
     posts.push(post);
     res.send(post);
@@ -50,6 +51,7 @@ server.post('/posts/:id/comments', (req, res) => {
             content: req.body.content
         }
     comments.push(comment);
+    res.send(comment);
 });
 
 server.get('/posts/:id/comments', (req, res) => {
