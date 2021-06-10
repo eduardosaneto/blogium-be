@@ -18,6 +18,7 @@ server.use(express.json());
 
 const posts = [];
 const comments = [];  
+let count = 0;
 
 server.get('/posts', (req, res) => {
     res.send(posts);
@@ -29,8 +30,9 @@ server.post('/posts', (req, res) => {
         id: posts.length,
         title: postData.title,
         coverURL: postData.coverURL,
-        contentPreview: postData.content.slice(0, 100),
+        contentPreview: postData.content.replace('<p>', '').replace('</p>', ''),
         content: postData.content,
+        commentCount: count
     }
     posts.push(post);
     res.send(post);
@@ -41,6 +43,12 @@ server.get('/posts/:id', (req, res) => {
     const response = posts.find(post => post.id === id);
     res.send(response);
 });
+
+server.delete('/posts/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const response = posts.filter(post => post.id !== id);
+    posts = response;
+})
 
 server.post('/posts/:id/comments', (req, res) => {
     const postId = parseInt(req.params.id);
@@ -56,7 +64,8 @@ server.post('/posts/:id/comments', (req, res) => {
 
 server.get('/posts/:id/comments', (req, res) => {
     const postId = parseInt(req.params.id);
-    const response = comments.filter(comment => comment.postId === postId)
+    const response = comments.filter(comment => comment.postId === postId);
+    count = response.length;
     res.send(response);
 });
 
