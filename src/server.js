@@ -7,15 +7,6 @@ const PORT = 4000;
 server.use(cors());
 server.use(express.json());
 
-// const posts = [{
-//     id: 1,
-//     title: 'Hello World',
-//     coverUrl: 'https://miro.medium.com/max/1024/1*OohqW5DGh9CQS4hLY5FXzA.png',
-//     contentPreview: 'Esta é a estrutura de um post esperado pelo front-end',
-//     content: 'Este é o conteúdo do post, o que realmente vai aparecer na página do post...',
-//     commentCount: 2
-//   }];
-
 const posts = [];
 const comments = [];  
 let count = 0;
